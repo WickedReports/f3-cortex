@@ -787,7 +787,7 @@ class Cortex extends Cursor {
 										(isset($parts[2])?(' '.$parts[2]):'')):$str;
 							},
 							explode(',',$options['order'])));
-					if (preg_match('/mssql|sqlsrv|odbc/', $this->db->driver()) &&
+					if (preg_match('/mssql|sqlsrv|dblib|odbc/', $this->db->driver()) &&
 						(isset($options['limit']) || isset($options['offset']))) {
 						$ofs=isset($options['offset'])?(int)$options['offset']:0;
 						$lmt=isset($options['limit'])?(int)$options['limit']:0;
@@ -2245,8 +2245,8 @@ class CortexQueryParser extends \Prefab {
 				$ncond = $this->_mongo_parse_logical_op($parts);
 				break;
 			case 'sql':
-				if (!$f3->exists('CORTEX.quoteConditions',$qc) || $qc)
-					$where = $this->sql_quoteCondition($where,$db);
+//				if (!$f3->exists('CORTEX.quoteConditions',$qc) || $qc)
+//					$where = $this->sql_quoteCondition($where,$db);
 				// preserve identifier
 				$where = preg_replace('/(?!\B)_id/', 'id', $where);
 				if ($db->driver() == 'pgsql')
@@ -2343,7 +2343,7 @@ class CortexQueryParser extends \Prefab {
 			function($match) use($db) {
 				if (!isset($match[2]))
 					return $match[1];
-				if (preg_match('/\b(AND|OR|IN|LIKE|NOT)\b/i',$match[2]))
+				if (preg_match('/\b(AND|OR|IN|LIKE|NOT|IS)\b/i',$match[2]))
 					return $match[2];
 				return $db->quotekey($match[2]);
 			}, $cond);
