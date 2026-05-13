@@ -2639,6 +2639,7 @@ class CortexCollection extends \ArrayIterator {
 		$this->append($model);
 	}
 
+	#[\ReturnTypeWillChange]
 	public function offsetSet($i, $val) {
 		$this->changed=true;
 		parent::offsetSet($i,$val);
