@@ -572,7 +572,7 @@ class Cortex extends Cursor {
 	 * @param int $rel_depths
 	 * @return array
 	 */
-	public function afind($filter = NULL, array $options = NULL, $ttl = 0, $rel_depths = 1) {
+	public function afind($filter = NULL, ?array $options = NULL, $ttl = 0, $rel_depths = 1) {
 		$result = $this->find($filter, $options, $ttl);
 		return $result ? $result->castAll($rel_depths): NULL;
 	}
@@ -584,7 +584,7 @@ class Cortex extends Cursor {
 	 * @param int        $ttl
 	 * @return CortexCollection
 	 */
-	public function find($filter = NULL, array $options = NULL, $ttl = 0) {
+	public function find($filter = NULL, ?array $options = NULL, $ttl = 0) {
 		$sort=false;
 		if ($this->dbsType!='sql') {
 			// see if reordering is needed
@@ -638,7 +638,7 @@ class Cortex extends Cursor {
 	 * @param bool $count
 	 * @return array|int|false array of underlying cursor objects
 	 */
-	protected function filteredFind($filter = NULL, array $options = NULL, $ttl = 0, $count=false) {
+	protected function filteredFind($filter = NULL, ?array $options = NULL, $ttl = 0, $count=false) {
 		if ($this->grp_stack) {
 			if ($this->dbsType == 'mongo') {
 				$group = array(
@@ -848,7 +848,7 @@ class Cortex extends Cursor {
 	 * @param int   $ttl
 	 * @return Cortex
 	 */
-	public function load($filter = NULL, array $options = NULL, $ttl = 0) {
+	public function load($filter = NULL, ?array $options = NULL, $ttl = 0) {
 		$this->reset();
 		$this->_ttl=$ttl?:$this->rel_ttl;
 		$res = $this->filteredFind($filter, $options, $ttl);
@@ -1199,7 +1199,7 @@ class Cortex extends Cursor {
 	 * @param int $ttl
 	 * @return mixed
 	 */
-	public function count($filter=NULL, array $options=NULL, $ttl=60) {
+	public function count($filter=NULL, ?array $options=NULL, $ttl=60) {
 		$has=$this->hasCond;
 		$count=$this->filteredFind($filter,$options,$ttl,true);
 		$this->hasCond=$has;
